@@ -19,6 +19,40 @@
     margin-left: auto;
 }
 
-.filters p {
+/*фільтри*/
+
+.labelTitle{
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 150%;
+    color: #6C717B;
     margin: 0;
+}
+
+.inputWrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.mapIcon {
+    position: absolute;
+    left: 18px;
+    stroke: #101828;
+    pointer-events: none;
+}
+
+.locationInput {
+    width: 100%;
+    padding: 18px 18px 18px 48px;
+    background-color: #F7F7F7;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    outline: none;
+}
+
+/* Зміна кольору плейсхолдера */
+.locationInput::placeholder {
+    color: rgba(16, 24, 40, 0.6);
 }
