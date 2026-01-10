@@ -1,7 +1,7 @@
 import "./globals.css";
 import Header from "@/components/Header/Header";
 // import Footer from "@/components/Footer/Footer";
-// import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
+import TanStackProvider from "@/components/TanStackProvider/TanStackProvider";
 
 
 export default function RootLayout({
@@ -12,12 +12,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {/* <TanStackProvider> */}
-        <Header />
+        <TanStackProvider>
+          <Header />
           {children}
           <div id="modal-root"></div>
-          {/* <Footer /> */}
-        {/* </TanStackProvider> */}
+        </TanStackProvider>
       </body>
     </html>
   );

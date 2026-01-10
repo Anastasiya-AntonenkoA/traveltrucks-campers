@@ -1,9 +1,13 @@
 .header {
+    background-color: #F7F7F7;    
+}
+
+.container {
+    position: relative;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    padding: 1rem 2rem;
-    background-color: #F7F7F7;
+    padding-left: 64px;
+    height: 72px;
 }
 
 .navigation {
@@ -11,12 +15,21 @@
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 1rem;
+    gap: 32px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+}
+
+.nav {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
 .navigation li a {
     text-decoration: none;
-    color: #101828;;
+    color: #101828;
     font-size: 1rem;
 }
 
