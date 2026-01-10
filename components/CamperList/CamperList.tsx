@@ -4,7 +4,6 @@ import { Camper } from "@/lib/api";
 import CamperCard from "../CamperCard/CamperCard";
 import css from "./CamperList.module.css";
 import { useState } from "react";
-import Pagination from "../Pagination/Pagination";
 
 
 type Props = {
@@ -12,21 +11,16 @@ type Props = {
 };
 
 const CamperList = ({ campers }: Props) => {
-    const [currentPage, setCurrentPage] = useState(1);
+    const [visibleCount, setVisibleCount] = useState(4);
     const itemsPerPage = 4;
 
-    const totalPages = Math.ceil(campers.length / itemsPerPage);
+    const currentCampers = campers.slice(0, visibleCount);
 
-    const indexOfLastCamper = currentPage * itemsPerPage;
-    const indexOfFirstCamper = indexOfLastCamper - itemsPerPage;
-    const currentCampers = campers.slice(indexOfFirstCamper, indexOfLastCamper);
+    const hasMore = visibleCount < campers.length;
 
-    const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    // Опціонально: скрол вгору при зміні сторінки
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-    
+    const handleLoadMore = () => {
+        setVisibleCount((prevCount) => prevCount + itemsPerPage);
+    };
     
     return (
         <div className={css.container}>
@@ -34,16 +28,16 @@ const CamperList = ({ campers }: Props) => {
                 {/* Location Section */}
             <div className={css.filterGroup}>
                 <h3 className={css.labelTitle}>Location</h3>
-                    <div className={css.inputWrapper}>
-                        <svg width="18" height="20" className={css.mapIcon}>
-                        <use href="/icons/sprite.svg#icon-map" />
-                        </svg>
-                        <input 
-                        type="text"
-                        placeholder="Kyiv, Ukraine" 
-                        className={css.locationInput} 
-                        />
-                    </div>
+                <div className={css.inputWrapper}>
+                    <svg width="18" height="20" className={css.mapIcon}>
+                    <use href="/icons/sprite.svg#icon-map" />
+                    </svg>
+                    <input 
+                    type="text"
+                    placeholder="Kyiv, Ukraine" 
+                    className={css.locationInput} 
+                    />
+                </div>
             </div>
 
             <p className={css.filtersText}>Filters</p>
@@ -53,27 +47,36 @@ const CamperList = ({ campers }: Props) => {
                 <h3 className={css.sectionTitle}>Vehicle equipment</h3>
                 <hr className={css.divider} />
                 <div className={css.checkboxGrid}>
-                {/* Кожен елемент можна винести в окремий компонент FilterCard */}
-                <button type="button" className={css.filterCard}>
-                    <span className={css.icon}>🌬️</span>
-                    <span>AC</span>
-                </button>
-                <button type="button" className={css.filterCard}>
-                    <span className={css.icon}>⚙️</span>
-                    <span>Automatic</span>
-                </button>
-                <button type="button" className={css.filterCard}>
-                    <span className={css.icon}>☕</span>
-                    <span>Kitchen</span>
-                </button>
-                <button type="button" className={css.filterCard}>
-                    <span className={css.icon}>📺</span>
-                    <span>TV</span>
-                </button>
-                <button type="button" className={css.filterCard}>
-                    <span className={css.icon}>🚿</span>
-                    <span>Bathroom</span>
-                </button>
+                    <button type="button" className={css.filterCard}>
+                        <svg width="32" height="32" className={css.icon}>
+                            <use href="/icons/sprite.svg#icon-ac" />
+                        </svg>
+                        <span>AC</span>
+                    </button>
+                    <button type="button" className={css.filterCard}>
+                        <svg width="32" height="32" className={css.icon}>
+                            <use href="/icons/sprite.svg#icon-automatic" />
+                        </svg>
+                        <span>Automatic</span>
+                    </button>
+                    <button type="button" className={css.filterCard}>
+                        <svg width="32" height="32" className={css.icon}>
+                            <use href="/icons/sprite.svg#icon-kitchen" />
+                        </svg>
+                        <span>Kitchen</span>
+                    </button>
+                    <button type="button" className={css.filterCard}>
+                        <svg width="32" height="32" className={css.icon}>
+                            <use href="/icons/sprite.svg#icon-tv" />
+                        </svg>
+                        <span>TV</span>
+                    </button>
+                    <button type="button" className={css.filterCard}>
+                        <svg width="32" height="32" className={css.icon}>
+                            <use href="/icons/sprite.svg#icon-bathroom" />
+                        </svg>
+                        <span>Bathroom</span>
+                    </button>
                 </div>
             </div>
 
@@ -83,15 +86,21 @@ const CamperList = ({ campers }: Props) => {
                 <hr className={css.divider} />
                 <div className={css.checkboxGrid}>
                 <button type="button" className={css.filterCard}>
-                    <span className={css.icon}>🚐</span>
+                    <svg width="32" height="32" className={css.icon}>
+                        <use href="/icons/sprite.svg#icon-van" />
+                    </svg>
                     <span>Van</span>
                 </button>
                 <button type="button" className={css.filterCard}>
-                    <span className={css.icon}>🚍</span>
+                    <svg width="32" height="32" className={css.icon}>
+                        <use href="/icons/sprite.svg#icon-fully-integrated" />
+                    </svg>
                     <span>Fully Integrated</span>
                 </button>
                 <button type="button" className={css.filterCard}>
-                    <span className={css.icon}>🚐</span>
+                    <svg width="32" height="32" className={css.icon}>
+                        <use href="/icons/sprite.svg#icon-alcove" />
+                    </svg>
                     <span>Alcove</span>
                 </button>
                 </div>
@@ -102,20 +111,22 @@ const CamperList = ({ campers }: Props) => {
                 Search
             </button>
             </aside>
-
             <main className={css.catalog}>
                 <ul className={css.list}>
                     {currentCampers.map((camper) => (
                         <CamperCard key={camper.id} item={camper} />
                     ))}
+                    {hasMore && (
+                        <div className={css.loadMoreWrapper}>
+                            <button 
+                            type="button" 
+                            className={css.loadMoreButton} 
+                            onClick={handleLoadMore}
+                            > Load more
+                            </button>
+                        </div>
+                    )}
                 </ul>
-                <div className={css.paginationWrapper}>
-                    <Pagination 
-                        totalPages={totalPages} 
-                        page={currentPage} 
-                        onChange={handlePageChange} 
-                    />
-                </div>  
             </main>
         </div>
     );

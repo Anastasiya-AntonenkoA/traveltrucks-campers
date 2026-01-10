@@ -19,6 +19,30 @@
     margin-left: auto;
 }
 
+/*padding*/
+
+.loadMoreWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+}
+
+.loadMoreButton {
+    padding: 16px 32px;
+    background-color: transparent;
+    border: 1px solid #DADDE1;
+    border-radius: 200px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.5;
+    cursor: pointer;
+    transition: border-color 0.3s ease;
+}
+
+.loadMoreButton:hover {
+    border-color: #E44848;
+}
+
 /*фільтри*/
 
 .labelTitle{
@@ -33,6 +57,12 @@
     position: relative;
     display: flex;
     align-items: center;
+    margin-top: 8px;
+}
+
+.locationInput::placeholder {
+    color: #101828 !important;;
+    opacity: 1;
 }
 
 .mapIcon {
@@ -52,7 +82,92 @@
     outline: none;
 }
 
-/* Зміна кольору плейсхолдера */
-.locationInput::placeholder {
-    color: rgba(16, 24, 40, 0.6);
+/*filters*/
+
+.filtersText{
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    color: #475467;
+    margin-top: 40px;
+}
+
+.filterGroup{
+    margin-top: 32px;
+}
+
+.sectionTitle{
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+}
+
+.divider {
+    border-top: 1px solid rgba(16, 24, 40, 0.1);
+}
+
+.checkboxGrid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+}
+
+.filterCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 112px;
+    height: 96px;
+    padding: 16px 4px;
+    background-color: transparent;
+    border: 1px solid rgba(16, 24, 40, 0.2);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+}
+
+.filterCard span {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 1.25;
+    color: #101828;
+    letter-spacing: -0.01em;
+    text-align: center;
+}
+
+.filterCard.active {
+    border-color: #E44848;
+}
+
+.filterCard:hover {
+    border-color: #E44848;
+}
+
+/*search*/
+
+.searchButton{
+    margin-top: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 200px;
+    border-color: #E44848;
+    background-color: #E44848;
+    text-decoration: none;
+    color: #ffffff;
+    width: 166px;
+    height: 56px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: -0.01em;
+}
+
+.searchButton:hover,
+.searchButton:active {
+    background-color: #D84343;
 }
