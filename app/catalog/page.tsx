@@ -9,7 +9,6 @@ const Campers = async () => {
   
   return (
     <section>
-      <h1>Campers List</h1>
       {campers.length > 0 ? (
         <CamperList campers={campers} />
       ) : (
