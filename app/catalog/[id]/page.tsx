@@ -1,10 +1,22 @@
-export default async function CamperDetailsPage({
-  params,
-}: {
+import { getCamperById } from "@/lib/api";
+import CamperDetails from "./CamperDetails";
+import { notFound } from "next/navigation";
+
+interface PageProps {
   params: Promise<{ id: string }>;
-}) {
+}
+
+export default async function Page({ params }: PageProps) {
   const { id } = await params;
-  
-  // Тут логіка отримання даних про кемпера за id
-  return <div>Деталі кемпера: {id}</div>;
+  const camper = await getCamperById(id);
+
+  if (!camper) {
+    notFound();
+  }
+
+  return (
+    <main>
+      <CamperDetails item={camper} />
+    </main>
+  );
 }

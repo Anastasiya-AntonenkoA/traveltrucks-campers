@@ -86,8 +86,12 @@ export const getCampers = async (
     }
 };
 
-// функція для одного кемпера (якщо є сторінка деталей)
-// export const getCamperById = async (id: string) => {
-//   const res = await instance.get<Camper>(`/campers/${id}`);
-//   return res.data;
-// };
+export const getCamperById = async (id: string) => {
+    try {
+        const res = await axios.get<Camper>(`/campers/${id}`);
+        return res.data;
+    } catch (error) {
+        console.error("Error fetching camper by id:", error);
+        return null;
+    }
+};

@@ -1,0 +1,110 @@
+.container {
+    padding: 48px 64px;
+    max-width: 1440px;
+    margin: 0 auto;
+}
+
+.name {
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 133%;
+    margin: 0;
+}
+
+.metaInfo {
+    display: flex;
+    gap: 16px;
+    font-size: 16px;
+    margin-top: 8px;
+}
+
+.ratingWrapper,
+.locationWrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.starIcon {
+    fill: #FFC531;
+}
+
+.ratingText {   
+    font-size: 16px;
+    text-decoration: underline;
+}
+
+.price {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    margin-top: 16px;
+}
+
+/* Галерея */
+.gallery {
+    display: flex;
+    gap: 48px;
+    list-style: none;
+    overflow-x: auto;
+    margin-top: 28px;
+    padding: 0;
+}
+
+.imageItem {
+    position: relative;
+    overflow: hidden;
+    border-radius: 10px;
+    width: 292px;
+    height: 312px;
+    
+}
+
+.image {
+    object-fit: cover;
+}
+
+.description {
+    color: #475467;
+    line-height: 1.5;
+    margin-top: 28px;
+    max-width: 100%;
+}
+
+/* Сsтка для нижньої частини */
+.bottomLayout {
+    display: grid;
+    grid-template-columns: 1fr 448px;
+    gap: 40px;
+    margin-top: 44px;
+}
+
+.tabsHeader {
+    display: flex;
+    gap: 40px;
+    border-bottom: 1px solid #E1E1E1;
+    margin-top: 60px;
+}
+
+.tab {
+    padding-bottom: 24px;
+    font-weight: 600;
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 20px;
+    line-height: 120%;
+}
+
+.active {
+    border-bottom: 4px solid #E44848;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 120%;
+}
+
+.featuresColumn {
+    background-color: #F7F7F7;
+    padding: 44px;
+    border-radius: 10px;
+}
