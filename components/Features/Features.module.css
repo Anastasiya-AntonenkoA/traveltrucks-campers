@@ -2,6 +2,8 @@
     display: flex;
     flex-direction: column;
     padding: 44px 52px;
+    height: 500px;
+    justify-content: space-between;
 }
 
 /* Список тегів-іконок */

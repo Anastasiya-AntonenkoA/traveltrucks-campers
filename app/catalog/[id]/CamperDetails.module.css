@@ -113,8 +113,20 @@
 
 /*блоки*/
 
-.bottomLayout{
-    margin-top: 40px;
+.bottomLayout {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    margin-top: 44px;
+}
+
+.contentColumn {
+    flex: 1;
+}
+
+.formColumn {
+    /* width: 448px; */
+    flex-shrink: 0;
 }
 
 .grayBackground {
