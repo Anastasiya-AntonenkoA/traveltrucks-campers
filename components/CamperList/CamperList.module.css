@@ -104,21 +104,6 @@
     }
 }
 
-/* .listWrapper {
-    position: relative;
-}
-
-.loaderOverlay {
-    position: fixed;
-    top: 50%;
-    left: 63%;
-    inset: 0;
-    background-color: rgba(245, 245, 245, 0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-} */
 .listWrapper {
     position: relative;
     min-height: 200px;
@@ -129,7 +114,6 @@
     top: 50%;
     left: 63%;
     transform: translate(-50%, -50%);
-    /* background-color: rgba(245, 245, 245, 0.8); */
     z-index: 9999;
     pointer-events: none;
 }

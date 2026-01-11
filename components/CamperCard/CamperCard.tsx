@@ -1,29 +1,37 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Camper } from "@/lib/api";
 import css from "./CamperCard.module.css";
 import Link from "next/link";
+import { useDispatch, useSelector } from "react-redux";
+import { toggleFavorite } from "@/store/slices/favoritesSlice";
+import { RootState } from "@/store/store";
 
 interface CamperCardProps {
   item: Camper;
-  isFavorite?: boolean;
-  onToggleFavorite?: (id: string) => void;
 }
 
-const CamperCard = ({ 
-  item, 
-  isFavorite = false, 
-  onToggleFavorite 
-}: CamperCardProps) => {
+const CamperCard = ({ item }: CamperCardProps) => {
+  const dispatch = useDispatch();
+  const [mounted, setIsClient] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setIsClient(true), 0);
+    return () => clearTimeout(timer);
+  }, []);
   
-  // обробник для кнопки уподобання
+  const isFavorite = useSelector((state: RootState) =>
+    state.favorites.items.includes(item.id)
+  );
+
   const handleFavoriteClick = () => {
-    if (onToggleFavorite) {
-      onToggleFavorite(item.id);
-    }
+    dispatch(toggleFavorite(item.id));
   };
-    
+
+  const activeFavorite = mounted && isFavorite;
+
   const tags = [
     { key: "transmission", label: item.transmission.charAt(0).toUpperCase() + item.transmission.slice(1), icon: "icon-automatic" },
     { key: "engine", label: item.engine.charAt(0).toUpperCase() + item.engine.slice(1), icon: "icon-petrol" },
@@ -44,25 +52,24 @@ const CamperCard = ({
         />
       </div>
 
-        <div className={css.content}>
-            <div className={css.header}>
-                <h2 className={css.name}>{item.name}</h2>
-                <div className={css.priceWrapper}>
-                    <span className={css.price}>€{item.price.toFixed(2)}</span>
-                      <button 
-                        aria-label={isFavorite ? "Remove from favorites" : "Add to favorites"}
-                        type="button" 
-                        className={`${css.favoriteBtn} ${isFavorite ? css.active : ""}`}
-                        onClick={handleFavoriteClick}
-                        >
-                        <svg width="24" height="24" className={css.heartIcon}>
-                            <use href={`/icons/sprite.svg#icon-heart${isFavorite ? "-filled" : ""}`} />
-                        </svg>
-                    </button>  
-                </div>    
-            </div>
+      <div className={css.content}>
+        <div className={css.header}>
+          <h2 className={css.name}>{item.name}</h2>
+          <div className={css.priceWrapper}>
+            <span className={css.price}>€{item.price.toFixed(2)}</span>
+            <button
+              aria-label={activeFavorite ? "Remove from favorites" : "Add to favorites"}
+              type="button"
+              className={`${css.favoriteBtn} ${activeFavorite ? css.active : ""}`}
+              onClick={handleFavoriteClick}
+            >
+              <svg width="24" height="24" className={css.heartIcon}>
+                <use href="/icons/sprite.svg#icon-heart" />
+              </svg>
+            </button>
+          </div>
+        </div>
 
-        {/* Рейтинг та Локація */}
         <div className={css.subHeader}>
           <div className={css.ratingWrapper}>
             <svg width="16" height="16" className={css.starIcon}>
@@ -80,10 +87,8 @@ const CamperCard = ({
           </div>
         </div>
 
-        {/* опис */}
         <p className={css.description}>{item.description}</p>
 
-        {/* теги */}
         <ul className={css.tagsList}>
           {tags.map((tag) => (
             <li key={tag.key} className={css.tag}>
@@ -94,8 +99,10 @@ const CamperCard = ({
             </li>
           ))}
         </ul>
-        
-        <Link href={`/catalog/${item.id}`} className={css.showMoreBtn}>Show more</Link>
+
+        <Link href={`/catalog/${item.id}`} className={css.showMoreBtn}>
+          Show more
+        </Link>
       </div>
     </li>
   );
