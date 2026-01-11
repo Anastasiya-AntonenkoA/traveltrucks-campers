@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// структура одного кемпера
 export type Camper = {
     id: string;
     name: string;
@@ -8,7 +7,7 @@ export type Camper = {
     rating: number;
     location: string;
     description: string;
-    form: "alcove" | "fullyIntegrated" | "panelTruck"; // типи кузова з макета (треба замінити)
+    form: "alcove" | "fullyIntegrated" | "panelTruck";
     length: string;
     width: string;
     height: string;
@@ -47,7 +46,6 @@ export type FilterParams = {
     bathroom?: boolean;
 };
 
-// відповіді від бекенду
 export type CampersResponse = {
     total: number;
     items: Camper[];

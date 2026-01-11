@@ -32,7 +32,6 @@ const CamperList = ({ initialData }: Props) => {
         const trans = searchParams.get("transmission");
         if (trans) params.transmission = trans;;
         
-        // Булеві значення MockAPI сприймає як true
         if (searchParams.get("AC") === "true") params.AC = true;
         if (searchParams.get("kitchen") === "true") params.kitchen = true;
         if (searchParams.get("TV") === "true") params.TV = true;

@@ -1,5 +1,5 @@
 "use client";
-
+import { equipmentFilters } from "@/constans/tags";
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { Camper } from "@/lib/api";
@@ -33,13 +33,17 @@ const CamperCard = ({ item }: CamperCardProps) => {
   const activeFavorite = mounted && isFavorite;
 
   const tags = [
-    { key: "transmission", label: item.transmission.charAt(0).toUpperCase() + item.transmission.slice(1), icon: "icon-automatic" },
+    {key: "transmission", label: item.transmission.charAt(0).toUpperCase() + item.transmission.slice(1), icon: "icon-automatic"},
     { key: "engine", label: item.engine.charAt(0).toUpperCase() + item.engine.slice(1), icon: "icon-petrol" },
-    item.AC && { key: "AC", label: "AC", icon: "icon-ac" },
-    item.kitchen && { key: "kitchen", label: "Kitchen", icon: "icon-kitchen" },
-    item.bathroom && { key: "bathroom", label: "Bathroom", icon: "icon-bathroom" },
-    item.TV && { key: "TV", label: "TV", icon: "icon-tv" },
-  ].filter(Boolean) as { key: string; label: string; icon: string }[];
+    ...equipmentFilters
+    .filter(filter => filter.id !== "transmission")
+    .filter(filter => item[filter.id as keyof Camper] === true)
+    .map(filter => ({
+      key: filter.id,
+      label: filter.label,
+      icon: `icon-${filter.id.toLowerCase()}`
+    }))
+];
 
   return (
     <li className={css.card}>
