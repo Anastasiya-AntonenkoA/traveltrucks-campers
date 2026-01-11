@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Camper } from "@/lib/api";
 import css from "./CamperCard.module.css";
+import Link from "next/link";
 
 interface CamperCardProps {
   item: Camper;
@@ -93,11 +94,8 @@ const CamperCard = ({
             </li>
           ))}
         </ul>
-
-        {/* кнопка*/}
-        <button type="button" className={css.showMoreBtn}>
-          Show more
-        </button>
+        
+        <Link href={`/catalog/${item.id}`} className={css.showMoreBtn}>Show more</Link>
       </div>
     </li>
   );

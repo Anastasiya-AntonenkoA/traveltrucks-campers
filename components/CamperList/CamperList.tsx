@@ -4,7 +4,8 @@ import { Camper, getCampers, FilterParams } from "@/lib/api";
 import CamperCard from "../CamperCard/CamperCard";
 import css from "./CamperList.module.css";
 import Filters from "../Filters/Filters";
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "next/navigation";
 
 
 type Props = {
@@ -12,16 +13,38 @@ type Props = {
 };
 
 const CamperList = ({ initialData }: Props) => {
+    const searchParams = useSearchParams();
     const [campers, setCampers] = useState<Camper[]>(initialData.items);
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [isEnd, setIsEnd] = useState(initialData.items.length < 4);
     const [currentFilters, setCurrentFilters] = useState<FilterParams | undefined>(undefined);
 
-    const fetchCampers = async (nextPage: number, filters: FilterParams | undefined, isNewSearch: boolean) => {
+    const getFiltersFromUrl = useCallback((): FilterParams => {
+        const params: FilterParams = {};
+        
+        const location = searchParams.get("location");
+        if (location) params.location = location;
+
+        const form = searchParams.get("form");
+        if (form) params.form = form;
+
+        const trans = searchParams.get("transmission");
+        if (trans) params.transmission = trans;;
+        
+        // Булеві значення MockAPI сприймає як true
+        if (searchParams.get("AC") === "true") params.AC = true;
+        if (searchParams.get("kitchen") === "true") params.kitchen = true;
+        if (searchParams.get("TV") === "true") params.TV = true;
+        if (searchParams.get("bathroom") === "true") params.bathroom = true;
+
+        return params;
+    }, [searchParams]);
+
+    const fetchCampers = useCallback(async (nextPage: number, filters: FilterParams | undefined, isNewSearch: boolean) => {
         setIsLoading(true);
         try {
-            const data = await getCampers(nextPage, 4, filters ?? undefined); 
+            const data = await getCampers(nextPage, 4, filters); 
             
             if (isNewSearch) {
                 setCampers(data.items);
@@ -37,11 +60,17 @@ const CamperList = ({ initialData }: Props) => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }, []);
+
+    useEffect(() => {
+        const filtersFromUrl = getFiltersFromUrl();
+        
+        setCurrentFilters(filtersFromUrl);
+        fetchCampers(1, filtersFromUrl, true);
+    }, [getFiltersFromUrl, fetchCampers]);
 
     const handleSearch = (filters: FilterParams) => {
         setCurrentFilters(filters);
-        fetchCampers(1, filters, true);
     };
 
     const handleLoadMore = () => {
@@ -53,11 +82,27 @@ const CamperList = ({ initialData }: Props) => {
             <Filters onSearch={handleSearch} />
             
             <main className={css.catalog}>
-                <ul className={css.list}>
-                    {campers.map((camper) => (
-                        <CamperCard key={camper.id} item={camper} />
-                    ))}
-                </ul>
+                <div className={css.listWrapper}>
+                    {campers.length > 0 && (
+                        <ul className={css.list}>
+                            {campers.map((camper) => (
+                                <CamperCard key={camper.id} item={camper} />
+                            ))}
+                        </ul>
+                    )}
+
+                    {isLoading && (
+                        <div className={css.loaderOverlay}>
+                            <span className={css.loader}></span>
+                        </div>
+                    )}
+                </div>
+
+                {campers.length === 0 && !isLoading && (
+                    <div className={css.noResults}>
+                        <p>No campers found matching your filters. Please try other criteria.</p>
+                    </div>
+                )}
 
                 {!isEnd && (
                     <div className={css.loadMoreWrapper}>

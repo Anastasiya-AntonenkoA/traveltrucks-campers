@@ -74,12 +74,16 @@ export const getCampers = async (
     if (filters.TV) params.TV = true;
     if (filters.bathroom) params.bathroom = true;
     
-    if (filters.transmission === "automatic") {
-        params.transmission = "automatic";
+    try {
+        const res = await axios.get<CampersResponse>("/campers", { params });
+        return res.data;
+    } catch (error: unknown) {
+        if (axios.isAxiosError(error) && error.response?.status === 404) {
+            return { items: [], total: 0 };
+        }
+        console.error("API error:", error);
+        throw error;
     }
-
-    const res = await axios.get<CampersResponse>("/campers", { params });
-    return res.data;
 };
 
 // функція для одного кемпера (якщо є сторінка деталей)
