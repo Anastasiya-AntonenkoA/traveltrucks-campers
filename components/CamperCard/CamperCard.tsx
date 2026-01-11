@@ -5,32 +5,32 @@ import Image from "next/image";
 import { Camper } from "@/lib/api";
 import css from "./CamperCard.module.css";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleFavorite } from "@/store/slices/favoritesSlice";
-import { RootState } from "@/store/store";
+
+import { useFavoritesStore } from "@/lib/stores/favoritesSlice";
 
 interface CamperCardProps {
   item: Camper;
 }
 
 const CamperCard = ({ item }: CamperCardProps) => {
-  const dispatch = useDispatch();
-  const [mounted, setIsClient] = useState(false);
+  const items = useFavoritesStore((state) => state.items);
+  const toggleFavorite = useFavoritesStore((state) => state.toggleFavorite);
+
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsClient(true), 0);
-    return () => clearTimeout(timer);
+    const frame = requestAnimationFrame(() => {
+      setMounted(true);
+    });
+    return () => cancelAnimationFrame(frame);
   }, []);
-  
-  const isFavorite = useSelector((state: RootState) =>
-    state.favorites.items.includes(item.id)
-  );
+
+  const isFavorite = items.includes(item.id);
+  const activeFavorite = mounted && isFavorite;
 
   const handleFavoriteClick = () => {
-    dispatch(toggleFavorite(item.id));
+    toggleFavorite(item.id);
   };
-
-  const activeFavorite = mounted && isFavorite;
 
   const tags = [
     {key: "transmission", label: item.transmission.charAt(0).toUpperCase() + item.transmission.slice(1), icon: "icon-automatic"},
@@ -43,7 +43,7 @@ const CamperCard = ({ item }: CamperCardProps) => {
       label: filter.label,
       icon: `icon-${filter.id.toLowerCase()}`
     }))
-];
+  ];
 
   return (
     <li className={css.card}>
@@ -67,13 +67,12 @@ const CamperCard = ({ item }: CamperCardProps) => {
               className={`${css.favoriteBtn} ${activeFavorite ? css.active : ""}`}
               onClick={handleFavoriteClick}
             >
-              <svg width="24" height="24" className={css.heartIcon}>
+              <svg width="26" height="24" className={css.heartIcon}>
                 <use href="/icons/sprite.svg#icon-heart" />
               </svg>
             </button>
           </div>
         </div>
-
         <div className={css.subHeader}>
           <div className={css.ratingWrapper}>
             <svg width="16" height="16" className={css.starIcon}>

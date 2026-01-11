@@ -1,36 +1,47 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Travel Trucks is a modern web-based camper rental platform that allows users to browse a catalog of motorhomes, filter them by features, add them to Favorites, and book trips.
 
-## Getting Started
+Technology stack:
+Framework: Next.js 15+ (App Router)
+State Management: Zustand
+Data Fetching: TanStack Query v5 (React Query)
+Styling: CSS Modules
+Icons: SVG Sprites
+Notifications: React Hot Toast
 
-First, run the development server:
+API: Custom backend for retrieving camper data and reviews
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Key features:
+Camper Catalog: Complete list of available trucks with detailed information.
+Favorites system: Ability to save campers. Data is stored in localStorage using Zustand, which allows you not to lose them after refreshing the page.
+Detail page: View the gallery, reviews, and technical specifications of each camper.
+Filtering: Search by location, body type, and equipment (AC, Kitchen, TV, etc.).
+Booking Form: Validated form for booking a campervan for specific dates.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Installation and launch
+Clone the repository:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+        git clone https://github.com/your-username/travel-trucks.git
+        cd travel-trucks
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+    Install dependencies:
 
-## Learn More
+        npm install
 
-To learn more about Next.js, take a look at the following resources:
+    Start the development server:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+        npm run dev
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+    Open the project: Go to http://localhost:3000 in your browser.
 
-## Deploy on Vercel
+Project structure
+src/
+├── app/ # Routing (Next.js App Router)
+├── components/ # Basic UI components (Card, Header, etc.)
+├── lib/ # API configuration and helper functions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contacts
+If you have any questions or suggestions, please contact me:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+    GitHub: https://github.com/Anastasiya-AntonenkoA
+    LinkedIn: https://www.linkedin.com/in/anastasiia-antonenko-044533387/
+    E-mail: Nastyaantonenkoa@gmail.com

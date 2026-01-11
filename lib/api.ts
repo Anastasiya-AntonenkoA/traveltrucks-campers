@@ -51,8 +51,7 @@ export type CampersResponse = {
     items: Camper[];
 };
 
-axios.defaults.baseURL = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io"; //мій
-// axios.defaults.baseURL = "https://69625c65d9d64c761907adb2.mockapi.io";
+axios.defaults.baseURL = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io";
 
 export const getCampers = async (
     page: number = 1, 
