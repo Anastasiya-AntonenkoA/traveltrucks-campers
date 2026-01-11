@@ -60,11 +60,6 @@
     margin-top: 8px;
 }
 
-.locationInput::placeholder {
-    color: #101828 !important;;
-    opacity: 1;
-}
-
 .mapIcon {
     position: absolute;
     left: 18px;

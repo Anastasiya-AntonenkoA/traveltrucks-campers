@@ -43,38 +43,18 @@ export type CampersResponse = {
     items: Camper[];
 };
 
-// axios.defaults.baseURL = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io";
-axios.defaults.baseURL = "https://69625c65d9d64c761907adb2.mockapi.io";
+axios.defaults.baseURL = "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io"; //мій
+// axios.defaults.baseURL = "https://69625c65d9d64c761907adb2.mockapi.io";
 
-export const getCampers = async () => {
-    const res = await axios.get<CampersResponse>("/campers");
+export const getCampers = async (page: number = 1, limit: number = 4) => {
+    const res = await axios.get<CampersResponse>("/campers", {
+        params: {
+            page: page,
+            limit: limit
+        }
+    });
     return res.data;
 };
-
-// const instance = axios.create({
-//   baseURL: "https://66b1f8e71ca8ad33d4f5f63e.mockapi.io",
-// });
-
-// отримання списку кемперів
-// export const getCampers = async (page = 1, limit = 4) => {
-//   try {
-//     const res = await instance.get<Camper[]>("/campers", {
-//       params: {
-//         page,
-//         limit,
-//       },
-//     });
-    
-//     // Якщо MockAPI повертає просто масив, ми самі формуємо структуру
-//     return {
-//       items: res.data,
-//       total: res.data.length // Або інше значення, якщо API не дає total
-//     };
-//   } catch (error) {
-//     console.error("Помилка при завантаженні кемперів:", error);
-//     throw error;
-//   }
-// };
 
 // функція для одного кемпера (якщо є сторінка деталей)
 // export const getCamperById = async (id: string) => {

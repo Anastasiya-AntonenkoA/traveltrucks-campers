@@ -1,25 +1,40 @@
 "use client";
 
-import { Camper } from "@/lib/api";
+import { Camper, getCampers } from "@/lib/api";
 import CamperCard from "../CamperCard/CamperCard";
 import css from "./CamperList.module.css";
 import { useState } from "react";
 
 
 type Props = {
-  campers: Camper[];
+    initialData: {
+    items: Camper[];
+    total: number;
+    };
 };
 
-const CamperList = ({ campers }: Props) => {
-    const [visibleCount, setVisibleCount] = useState(4);
-    const itemsPerPage = 4;
+const CamperList = ({ initialData }: Props) => {
+    const [campers, setCampers] = useState<Camper[]>(initialData.items);
+    const [page, setPage] = useState(1);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isEnd, setIsEnd] = useState(initialData.items.length < 4);
 
-    const currentCampers = campers.slice(0, visibleCount);
+    const handleLoadMore = async () => {
+        const nextPage = page + 1;
+        setIsLoading(true);
 
-    const hasMore = visibleCount < campers.length;
-
-    const handleLoadMore = () => {
-        setVisibleCount((prevCount) => prevCount + itemsPerPage);
+        try {
+            const data = await getCampers(nextPage, 4);
+            if (data.items.length < 4) {
+                setIsEnd(true);
+            }
+            setCampers((prev) => [...prev, ...data.items]);
+            setPage(nextPage);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsLoading(false);
+        }
     };
     
     return (
@@ -113,20 +128,23 @@ const CamperList = ({ campers }: Props) => {
             </aside>
             <main className={css.catalog}>
                 <ul className={css.list}>
-                    {currentCampers.map((camper) => (
+                    {campers.map((camper) => (
                         <CamperCard key={camper.id} item={camper} />
                     ))}
-                    {hasMore && (
-                        <div className={css.loadMoreWrapper}>
-                            <button 
+                </ul>
+
+                {!isEnd && (
+                    <div className={css.loadMoreWrapper}>
+                        <button 
                             type="button" 
                             className={css.loadMoreButton} 
                             onClick={handleLoadMore}
-                            > Load more
-                            </button>
-                        </div>
-                    )}
-                </ul>
+                            disabled={isLoading}
+                        >
+                            {isLoading ? "Loading..." : "Load more"}
+                        </button>
+                    </div>
+                )}
             </main>
         </div>
     );
