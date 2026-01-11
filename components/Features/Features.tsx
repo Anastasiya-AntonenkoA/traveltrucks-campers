@@ -6,7 +6,6 @@ interface FeaturesProps {
 }
 
 const Features = ({ item }: FeaturesProps) => {
-  // Формуємо масив тегів (як ви робили в картці)
   const tags = [
     { key: "transmission", label: item.transmission, icon: "icon-automatic" },
     { key: "engine", label: item.engine, icon: "icon-petrol" },

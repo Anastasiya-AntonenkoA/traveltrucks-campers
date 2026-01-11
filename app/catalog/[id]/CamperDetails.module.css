@@ -94,10 +94,12 @@
     cursor: pointer;
     font-size: 20px;
     line-height: 120%;
+    border-bottom: 5px solid transparent;
+    transition: border-color 0.1s ease;
 }
 
 .active {
-    border-bottom: 4px solid #E44848;
+    border-bottom-color: #E44848;
     font-weight: 600;
     font-size: 20px;
     line-height: 120%;
@@ -107,4 +109,22 @@
     background-color: #F7F7F7;
     padding: 44px;
     border-radius: 10px;
+}
+
+/*блоки*/
+
+.bottomLayout{
+    margin-top: 40px;
+}
+
+.grayBackground {
+    background-color: #F7F7F7;
+    border-radius: 10px;
+    width: 631px;
+    height: auto;
+}
+
+.whiteBackground {
+    background-color: #ffffff;
+    padding: 0;
 }

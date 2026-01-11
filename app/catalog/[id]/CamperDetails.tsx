@@ -96,15 +96,15 @@ const CamperDetails = ({ item }: Props) => {
         </button>
       </div>
 
-      {/* 5. Контентна частина (Компоненти + Форма) */}
+      {/* компоненти + Форма) */}
       <div className={css.bottomLayout}>
-        <div className={css.contentColumn}>
-          {activeTab === "features" ? (
-            <Features item={item} />
-          ) : (
-            <Reviews reviews={item.reviews} />
-          )}
-        </div>
+        <div className={`${css.contentColumn} ${activeTab === "features" ? css.grayBackground : ""}`}>
+            {activeTab === "features" ? (
+                <Features item={item} />
+            ) : (
+                <Reviews reviews={item.reviews} />
+            )}
+            </div>
 
         <div className={css.formColumn}>
           <BookForm />
